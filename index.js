@@ -1,6 +1,11 @@
 const express = require("express")
+const mongoose = require('mongoose');
 
 const app = express()
+
+mongoose.connect("mongodb://myuser:mypassword@mongo:27017/?authSource=admin")
+.then(() => console.log("succesfully connected to DB"))
+.catch((e) => console.log(e));
 
 app.get("/", (req, res) => {
     res.send("<h2>Hi There!</h2>")
