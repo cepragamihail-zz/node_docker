@@ -27,6 +27,7 @@ mongoose.connect(mongoURL, {
 .catch((e) => console.log(e));
 
 app.use(express.json());
+app.enable("trust proxy");
 app.use(session({
     store: new RedisStore({client: redisClient}),
     secret: SESSION_SECRET,
