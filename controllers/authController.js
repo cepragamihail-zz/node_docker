@@ -5,8 +5,8 @@ exports.signUp = async (req, res) => {
     const {username, password} = req.body;
     try {
         const hashpassword = await bcrypt.hash(password, 12);
-        const newUser = await User.create({username, password: hashpassword})
-        console.log(newUser)
+        const newUser = await User.create({username, password: hashpassword});
+        req.session.user = newUser;
         res.status(201).json({
             status: 'success',
             data: {
@@ -33,6 +33,7 @@ exports.login = async (req, res) => {
         }
         const isCorrect = await bcrypt.compare(password, user.password)
         if (isCorrect) {
+            req.session.user = user
             res.status(200).json({
                 status: 'success'
             })
